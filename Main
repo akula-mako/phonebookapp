@@ -1,0 +1,92 @@
+import java.util.*;
+public class Main {
+    private static Map<String, String> phonebook = new HashMap<>();
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        boolean running = true;
+        while (running) {
+            System.out.println("\nPhonebook Application");
+            System.out.println("1. Add Contact");
+            System.out.println("2. Update Contact");
+            System.out.println("3. Delete Contact");
+            System.out.println("4. View All Contacts");
+            System.out.println("5. Exit");
+            System.out.print("Choose an option: ");
+            int choice = scan.nextInt();
+            scan.nextLine();
+            switch (choice) {
+                case 1: {
+                    addContact(scan);
+                    break;
+                }
+                case 2: {
+                    updateContact(scan);
+                    break;
+                }
+                case 3: {
+                    deleteContact(scan);
+                    break;
+                }
+                case 4: {
+                    viewContacts();
+                    break;
+                }
+                case 5: {
+                    System.out.println("Exiting application...");
+                    running = false;
+                    break;
+                }
+                default: {
+                    System.out.println("Invalid choice. Please try again.");
+                }
+            }
+        }
+    }
+
+    private static void addContact(Scanner scan) {
+        System.out.print("Enter contact name: ");
+        String name = scan.nextLine();
+        System.out.print("Enter contact number: ");
+        String number = scan.nextLine();
+        if (phonebook.containsKey(name)) {
+            System.out.println("Contact already exists. Use update to change the number.");
+        } else {
+            phonebook.put(name, number);
+            System.out.println("Contact added successfully.");
+        }
+    }
+
+    private static void updateContact(Scanner scan) {
+        System.out.print("Enter contact name to update: ");
+        String name = scan.nextLine();
+        if (phonebook.containsKey(name)) {
+            System.out.print("Enter new contact number: ");
+            String number = scan.nextLine();
+            phonebook.put(name, number);
+            System.out.println("Contact updated successfully.");
+        } else {
+            System.out.println("Contact not found.");
+        }
+    }
+
+    private static void deleteContact(Scanner scan) {
+        System.out.print("Enter contact name to delete: ");
+        String name = scan.nextLine();
+        if (phonebook.containsKey(name)) {
+            phonebook.remove(name);
+            System.out.println("Contact deleted successfully.");
+        } else {
+            System.out.println("Contact not found.");
+        }
+    }
+    private static void viewContacts() {
+        if (phonebook.isEmpty()) {
+            System.out.println("Phonebook is empty.");
+        } else {
+            System.out.println("\nContacts:");
+            for (Map.Entry<String, String> entry : phonebook.entrySet()) {
+                System.out.println("Name: " + entry.getKey() + ", Number: " + entry.getValue());
+            }
+        }
+    }
+}
